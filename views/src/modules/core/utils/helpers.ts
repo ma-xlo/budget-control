@@ -23,3 +23,14 @@ export const queryKeyToUrl = (queryKey: QueryKey): string => {
 
   return query ? `/${path}/?${query}` : `/${path}/`;
 };
+
+export const getCookie = (name: string) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+
+  if (!parts) return;
+
+  if (!value) return;
+
+  if (parts.length === 2) return parts.pop()?.split(";")?.shift();
+};

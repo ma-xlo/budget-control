@@ -2,12 +2,19 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Expense } from "../../services/types";
 import ColumnSorting from "../../../core/components/ui/data-table/column/column-sorting";
 import { moneyMask } from "../../utils/helpers";
+import Text from "../../../core/components/ui/text";
+import React from "react";
 
 export const ExpensesTableColumns: ColumnDef<Expense>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
       return <ColumnSorting column={column}>Nome</ColumnSorting>;
+    },
+    cell: ({ row }) => {
+      const { name } = row.original;
+
+      return <Text>{name}</Text>;
     },
   },
   {

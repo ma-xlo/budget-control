@@ -13,10 +13,52 @@ import { TabsContent } from "@core/components/ui/tabs";
 
 const CategoriesOverview = () => {
   return (
-    <TabsContent value="categories">
+    <TabsContent
+      value="categories"
+      className="
+      grid
+      grid-cols-1
+      gap-4
+      sm:grid-cols-2
+      md:grid-cols-3
+      lg:grid-cols-3
+      xl:grid-cols-3
+      2xl:grid-cols-3
+    "
+    >
       <Card>
         <CardHeader>
-          <CardTitle>Categorias</CardTitle>
+          <CardTitle className="h6">Moradia</CardTitle>
+          <CardContent></CardContent>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="h6">Alimentação</CardTitle>
+          <CardContent></CardContent>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="h6">Vestuário</CardTitle>
+          <CardContent></CardContent>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="h6">Transporte</CardTitle>
+          <CardContent></CardContent>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="h6">Lazer</CardTitle>
+          <CardContent></CardContent>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="h6">Outros</CardTitle>
           <CardContent></CardContent>
         </CardHeader>
       </Card>

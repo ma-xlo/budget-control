@@ -62,7 +62,11 @@ const ExpensesTable = () => {
             {table.getHeaderGroups().map((headerGroup) => (
               <DataTableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <DataTableHead key={header.id} headerSize={header.getSize()}>
+                  <DataTableHead
+                    className="first:rounded-tl-xl last:rounded-tr-xl"
+                    key={header.id}
+                    headerSize={header.getSize()}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(

@@ -22,7 +22,7 @@ import MonthsOverview from "./months-overview";
 const OverviewTabs = () => {
   return (
     <Tabs defaultValue="categories" className="w-full">
-      <TabsList className="grid w-full grid-cols-3">
+      <TabsList className="grid w-full md:w-[300px] grid-cols-3">
         <TabsTrigger value="categories">Categorias</TabsTrigger>
         <TabsTrigger value="responsibles">Responsável</TabsTrigger>
         <TabsTrigger value="months">Mês</TabsTrigger>

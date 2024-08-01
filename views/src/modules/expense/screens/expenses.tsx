@@ -11,11 +11,12 @@ const ExpensesScreen = () => {
   });
 
   return (
-    <main className="p-6 min-h-svh h-fit space-y-2 bg-secondary/30">
-      <ThemeToggle />
-      <Text tag="h1">Minhas Contas</Text>
-      <ExpensesOverview />
-      <AllExpenses />
+    <main className="p-6 min-h-svh h-fit space-y-6 bg-secondary/30">
+      <Text tag="h1">Despesas</Text>
+      <div className="space-y-4">
+        <ExpensesOverview />
+        <AllExpenses />
+      </div>
     </main>
   );
 };

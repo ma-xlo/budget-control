@@ -6,15 +6,34 @@ import { ReactQueryProvider as QueryClientProvider } from "@core/lib/react-query
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/home";
 import ExpensesPage from "./pages/expenses";
+import DefaultLayout from "./modules/core/layouts/default";
+import { getCookie } from "./modules/core/utils/helpers";
+
+const layout = getCookie("react-resizable-panels:layout");
+const collapsed = getCookie("react-resizable-panels:collapsed");
+
+const defaultLayout = layout ? JSON.parse(layout) : undefined;
+const defaultCollapsed = collapsed ? JSON.parse(collapsed) : undefined;
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
-  },
-  {
-    path: "/expenses",
-    element: <ExpensesPage />,
+    element: (
+      <DefaultLayout
+        defaultLayout={defaultLayout}
+        defaultCollapsed={defaultCollapsed}
+      />
+    ),
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/expenses",
+        element: <ExpensesPage />,
+      },
+    ],
   },
 ]);
 
