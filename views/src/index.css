@@ -111,15 +111,15 @@
   }
 
   tr {
-    @apply m-0 divide-x border-t-0 p-0 even:bg-muted dark:even:bg-muted/20;
+    @apply m-0 divide-x border-t-0 p-0 even:bg-secondary/30 dark:even:bg-secondary;
   }
 
   th {
-    @apply bg-muted p-2 text-left font-bold dark:bg-muted/40 [&[align=center]]:text-center [&[align=right]]:text-right;
+    @apply bg-secondary p-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
   }
 
   td {
-    @apply border-0 p-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right !important;
+    @apply border-0 p-4 text-left [&[align=center]]:text-center [&[align=right]]:text-right !important;
   }
 
   ul {
