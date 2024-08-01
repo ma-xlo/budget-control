@@ -1,8 +1,8 @@
 import sequelize from './config/database.js';
-import User from './models/user.js'; // Import your models
+import User from './models/user.js'; 
+import Expense from './models/expense.js';
 
-// Sync all models to the database
-sequelize.sync({ force: true }) // Use `force: true` to drop and recreate tables
+sequelize.sync({ force: true }) 
   .then(() => {
     console.log('Database & tables created!');
   })
