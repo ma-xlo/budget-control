@@ -12,7 +12,7 @@ const Expense = sequelize.define('Expense', {
     type: DataTypes.DECIMAL(10,2),
     allowNull: false,
   },
-  responsible: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {

@@ -1,8 +1,17 @@
-import Expense from '../models/expense.js'
+import Expense from '../models/expense.js';
+import { validateAuthorization } from '../utils/helpers.js'
 
 export async function createExpense (req, res) {
+  const user = validateAuthorization(req.headers.authorization)
+
+  if(!user) {
+    return res.status(401).json({message: "Unauthorized"})
+  }
+
   try {
-    const expense = await Expense.create(req.body);
+    const payload = req.body
+    payload.userId =  user.id
+    const expense = await Expense.create(payload);
     return res.status(201).json(expense);
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -10,9 +19,15 @@ export async function createExpense (req, res) {
 };
 
 export async function getAllExpenses (req, res) {
+  const user = validateAuthorization(req.headers.authorization)
+
+  if(!user) {
+    return res.status(401).json({message: "Unauthorized"})
+  }
+
   try {
     const expenses = await Expense.findAll();
-    res.status(200).json(expenses);
+    return res.status(200).json(expenses);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -20,6 +35,12 @@ export async function getAllExpenses (req, res) {
 
 
 export async function deleteExpense(req, res){
+  const user = validateAuthorization(req.headers.authorization)
+
+  if(!user) {
+    return res.status(401).json({message: "Unauthorized"})
+  }
+
   try {
     const expenseId = req.params.id;
     const expense = await Expense.findByPk(expenseId);
@@ -36,6 +57,12 @@ export async function deleteExpense(req, res){
 }
 
 export async function updateExpense(req, res){
+  const user = validateAuthorization(req.headers.authorization)
+
+  if(!user) {
+    return res.status(401).json({message: "Unauthorized"})
+  }
+
   try {
     const expenseId = req.params.id;
     const expense = await Expense.findByPk(expenseId);
@@ -55,6 +82,12 @@ export async function updateExpense(req, res){
 }
 
 export async function getExpense(req, res){
+  const user = validateAuthorization(req.headers.authorization)
+
+  if(!user) {
+    return res.status(401).json({message: "Unauthorized"})
+  }
+  
   try {
     const expenseId = req.params.id;
     const expense = await Expense.findByPk(expenseId);
