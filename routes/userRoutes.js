@@ -1,12 +1,18 @@
 import express from 'express';
-import { createUser, deleteUser } from '../controllers/userController.js';
+import { 
+  createUser,
+  deleteUser,
+  getAllUsers,
+  getUser,
+  updateUser
+} from '../controllers/userController.js';
 
 const router = express.Router();
 
 router.post('/users', createUser);
-router.delete('/users/:id', deleteUser)
-router.get('/users', (req, res) => {
-  res.status(200).json({message: "ok"})
-});
+router.get('/users', getAllUsers);
+router.get('/users/:id/', getUser);
+router.put('/users/:id/', updateUser);
+router.delete('/users/:id/', deleteUser);
 
 export default router;

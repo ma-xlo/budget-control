@@ -1,6 +1,7 @@
 import sequelize from './config/database.js';
 import User from './models/user.js'; 
 import Expense from './models/expense.js';
+import Category from './models/category.js';
 
 sequelize.sync({ force: true }) 
   .then(() => {
