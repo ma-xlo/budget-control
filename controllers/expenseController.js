@@ -38,9 +38,17 @@ export async function deleteExpense(req, res){
 export async function updateExpense(req, res){
   try {
     const expenseId = req.params.id;
-    const expense = await Expense.update(req.body,{where: {id: expenseId}});
-    return res.status(200).json(expense)
+    const expense = await Expense.findByPk(expenseId);
+    
+    if(!expense) {
+      return res.status(404).json({message: "Not found"})
+    }
 
+    await Expense.update(req.body,{where: {id: expenseId}});
+
+    const updatedExpense = await Expense.findByPk(expenseId);
+    return res.status(200).json(updatedExpense);
+    
   } catch (error) {
     return res.status(500).json({error: error.message})
   }

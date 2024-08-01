@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
+import User from './user.js';
 
 const Expense = sequelize.define('Expense', {
   name: {
@@ -11,8 +12,12 @@ const Expense = sequelize.define('Expense', {
     allowNull: false,
   },
   responsible: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
+    references: {
+      model: User, 
+      key: 'id',
+    },
   },
   status: {
     type: DataTypes.STRING
