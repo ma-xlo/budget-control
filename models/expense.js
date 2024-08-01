@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 import User from './user.js';
+import Category from './category.js';
 
 const Expense = sequelize.define('Expense', {
   name: {
@@ -23,7 +24,12 @@ const Expense = sequelize.define('Expense', {
     type: DataTypes.STRING
   },
   category: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: Category, 
+      key: 'id',
+    },
   },
   dueDate: {
     type: DataTypes.DATE,
