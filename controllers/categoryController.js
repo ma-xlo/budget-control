@@ -9,7 +9,6 @@ export async function getAllCategories (req, res) {
     return res.status(400).json({ error: error.message });
   }
 };
-
 export async function getCategory(req, res){
   try {
     const categoryId = req.params.id;
