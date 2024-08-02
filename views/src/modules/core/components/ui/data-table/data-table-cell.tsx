@@ -1,10 +1,11 @@
-import { TableCell } from '@core/components/ui/table'
-import { forwardRef, ReactNode, TdHTMLAttributes } from 'react'
+import { TableCell } from "@core/components/ui/table";
+import React from "react";
+import { forwardRef, ReactNode, TdHTMLAttributes } from "react";
 
 interface DataTableCellProps extends TdHTMLAttributes<HTMLTableCellElement> {
-  children: ReactNode
-  cellWidth?: number
-  cellMinWidth?: number | undefined
+  children: ReactNode;
+  cellWidth?: number;
+  cellMinWidth?: number | undefined;
 }
 
 const DataTableCell = forwardRef<HTMLTableCellElement, DataTableCellProps>(
@@ -17,7 +18,7 @@ const DataTableCell = forwardRef<HTMLTableCellElement, DataTableCellProps>(
     >
       {children}
     </TableCell>
-  ),
-)
+  )
+);
 
-export default DataTableCell
+export default DataTableCell;

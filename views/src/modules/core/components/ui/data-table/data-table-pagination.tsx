@@ -13,17 +13,20 @@ import {
   SelectValue,
 } from "@core/components/ui/select";
 import { useDataTableContext } from "./data-table-provider";
+import React from "react";
 
 export function DataTablePagination() {
   const { table } = useDataTableContext();
 
   return (
-    <div className="mb-2 mt-4 flex items-center justify-between px-2">
+    <div className="py-2 flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} de{" "}
-        {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
+        {table.getFilteredRowModel().rows.length}{" "}
+        {table.getFilteredRowModel().rows.length === 1 ? "linha" : "linhas"}{" "}
+        selecionadas.
       </div>
-      <div className="flex items-center space-x-6 lg:space-x-8">
+      <div className="flex items-center space-x-1 md:space-x-6">
         {/* <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">Linhas por página</p>
           <Select

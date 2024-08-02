@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        'dark-pattern': 'url(src/assets/pattern-dark.svg)'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

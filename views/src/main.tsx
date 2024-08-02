@@ -8,6 +8,7 @@ import HomePage from "./pages/home";
 import ExpensesPage from "./pages/expenses";
 import DefaultLayout from "./modules/core/layouts/default";
 import { getCookie } from "./modules/core/utils/helpers";
+import { Toaster } from "./modules/core/components/ui/sonner";
 
 const layout = getCookie("react-resizable-panels:layout");
 const collapsed = getCookie("react-resizable-panels:collapsed");
@@ -41,7 +42,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        {/* <Toaster richColors /> */}
+        <Toaster />
         <RouterProvider router={router} />
       </ThemeProvider>
     </QueryClientProvider>

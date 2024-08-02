@@ -22,8 +22,13 @@ import {
 } from "../../../core/components/ui/data-table";
 import { ColumnResizer } from "../../../core/components/ui/data-table/column/column-resizer";
 import { DataTablePagination } from "../../../core/components/ui/data-table/data-table-pagination";
+import React from "react";
+import { Checkbox } from "../../../core/components/ui/checkbox";
+import AddExpenseRowForm from "../add-expense-row-form";
+import { useAddExpenseFormProvider } from "../add-expense-form-provider";
 
 const ExpensesTable = () => {
+  const { isAddingExpense, setIsAddingExpense } = useAddExpenseFormProvider();
   const { data: expenses, status: statusListExpenses } = useQuery<Expense[]>({
     queryKey: keyListExpenses(),
   });
@@ -51,7 +56,7 @@ const ExpensesTable = () => {
   }
 
   return (
-    <div className="border rounded-xl">
+    <div className="border rounded-xl bg-card">
       <DataTableProvider
         table={table}
         columns={ExpensesTableColumns}
@@ -65,7 +70,6 @@ const ExpensesTable = () => {
                   <DataTableHead
                     className="first:rounded-tl-xl last:rounded-tr-xl"
                     key={header.id}
-                    headerSize={header.getSize()}
                   >
                     {header.isPlaceholder
                       ? null
@@ -73,7 +77,6 @@ const ExpensesTable = () => {
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                    {/* <ColumnResizer header={header} /> */}
                   </DataTableHead>
                 ))}
               </DataTableRow>
@@ -88,11 +91,7 @@ const ExpensesTable = () => {
                   className="hover:cursor-pointer"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <DataTableCell
-                      key={cell.id}
-                      cellWidth={cell.column.getSize()}
-                      cellMinWidth={cell.column.columnDef.minSize}
-                    >
+                    <DataTableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -111,6 +110,12 @@ const ExpensesTable = () => {
                 </DataTableCell>
               </DataTableRow>
             )}
+            {isAddingExpense && <AddExpenseRowForm />}
+            <DataTableRow onClick={() => setIsAddingExpense(true)}>
+              <DataTableCell colSpan={ExpensesTableColumns.length}>
+                Adicionar +
+              </DataTableCell>
+            </DataTableRow>
           </DataTableBody>
         </DataTable>
         <DataTablePagination />
