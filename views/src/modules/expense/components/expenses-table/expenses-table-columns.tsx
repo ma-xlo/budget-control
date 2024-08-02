@@ -100,22 +100,24 @@ export const ExpensesTableColumns: ColumnDef<Expense>[] = [
       const payment = row.original;
 
       return (
-        <ResponsiveDropdownMenu>
-          <ResponsiveDropdownTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </ResponsiveDropdownTrigger>
+        <div className="flex w-full justify-center">
+          <ResponsiveDropdownMenu>
+            <ResponsiveDropdownTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Abrir menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </ResponsiveDropdownTrigger>
 
-          <ResponsiveDropdownContent align="end">
-            <ResponsiveDropdownMenuHeader>
-              <ResponsiveDropdownLabel>Ações</ResponsiveDropdownLabel>
-            </ResponsiveDropdownMenuHeader>
-            <ResponsiveDropdownMenuSeparator />
-            <ResponsiveDropdownMenuItem>Editar</ResponsiveDropdownMenuItem>
-          </ResponsiveDropdownContent>
-        </ResponsiveDropdownMenu>
+            <ResponsiveDropdownContent align="end">
+              <ResponsiveDropdownMenuHeader>
+                <ResponsiveDropdownLabel>Ações</ResponsiveDropdownLabel>
+              </ResponsiveDropdownMenuHeader>
+              <ResponsiveDropdownMenuSeparator />
+              <ResponsiveDropdownMenuItem>Editar</ResponsiveDropdownMenuItem>
+            </ResponsiveDropdownContent>
+          </ResponsiveDropdownMenu>
+        </div>
       );
     },
   },

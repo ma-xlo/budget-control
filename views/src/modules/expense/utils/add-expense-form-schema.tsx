@@ -14,9 +14,6 @@ export const AddExpenseFormSchema = z.object({
       (value) => value < 99999999999,
       "O valor máximo é R$ 999.999.999,00"
     ),
-  responsible: z.number({
-    required_error: "É necessário selecionar um responsável",
-  }),
   category: z.number({
     required_error: "É necessário selecionar uma categoria",
   }),

@@ -11,6 +11,7 @@ import { api } from "../axios";
 import { RawResponse } from "@entities/response";
 import { queryKeyToUrl } from "@core/utils/helpers";
 import parseResponseData from "@core/utils/parse-response-data";
+import React from "react";
 
 export const queryClient = new QueryClient({
   defaultOptions: {

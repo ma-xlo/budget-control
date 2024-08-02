@@ -14,8 +14,10 @@ import {
 } from "@core/components/ui/select";
 import { useDataTableContext } from "./data-table-provider";
 import React from "react";
+import useMediaQuery from "../../../hooks/use-media-query";
 
 export function DataTablePagination() {
+  const isDesktop = useMediaQuery();
   const { table } = useDataTableContext();
 
   return (
@@ -47,9 +49,9 @@ export function DataTablePagination() {
             </SelectContent>
           </Select>
         </div> */}
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Página {table.getState().pagination.pageIndex + 1} de{" "}
-          {table.getPageCount()}
+        <div className="flex md:w-[100px] items-center justify-center text-sm font-medium">
+          {isDesktop ? "Página" : ""}{" "}
+          {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
         </div>
         <div className="flex items-center space-x-2">
           <Button
