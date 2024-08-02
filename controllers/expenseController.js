@@ -1,4 +1,5 @@
 import Expense from '../models/expense.js';
+import Category from '../models/category.js';
 import { validateAuthorization } from '../utils/helpers.js'
 
 export async function createExpense (req, res) {
@@ -20,7 +21,7 @@ export async function createExpense (req, res) {
 
 export async function getAllExpenses (req, res) {
   const user = validateAuthorization(req.headers.authorization)
-
+  console.log(user)
   if(!user) {
     return res.status(401).json({message: "Unauthorized"})
   }
@@ -100,4 +101,32 @@ export async function getExpense(req, res){
   } catch (error) {
     return res.status(500).json({error: error.message})
   }
+}
+
+export async function getExpenseByCategory(req, res) {
+  const user = validateAuthorization(req.headers.authorization)
+
+  if(!user) {
+    return res.status(401).json({message: "Unauthorized"})
+  }
+
+  try {
+
+    const payload = []
+    const totalCategories = await Category.findAll()
+
+    for(const category of totalCategories){
+      const expenseByCategory = await Expense.findAll({ where: {category: category.id } });
+      const totalExpense = expenseByCategory.reduce((accumulator, expense) => {
+        return accumulator + expense.value;
+      }, 0)
+      payload.push({category: category.name, total: totalExpense})
+
+    }
+
+    return res.status(200).json(payload)
+
+  } catch (error) {
+      return res.status(500).json({error: error.message})
+    }
 }
