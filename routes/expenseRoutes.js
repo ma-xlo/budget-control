@@ -5,7 +5,9 @@ import {
   getAllExpenses,
   updateExpense,
   getExpense,
-  getExpenseByCategory
+  getTotalByCategory,
+  getTotalByUser,
+  getTotalByPaymentDate
 } from '../controllers/expenseController.js';
 
 const router = express.Router();
@@ -15,6 +17,8 @@ router.get('/expenses/', getAllExpenses);
 router.delete('/expenses/:id/', deleteExpense);
 router.put('/expenses/:id/', updateExpense);
 router.get('/expenses/:id/', getExpense);
-router.get('/expenses/total/categories/', getExpenseByCategory);
+router.get('/expenses/total/categories/', getTotalByCategory);
+router.get('/expenses/total/users/', getTotalByUser);
+router.get('/expenses/total/paymentdate/', getTotalByPaymentDate);
 
 export default router;
