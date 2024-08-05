@@ -99,7 +99,6 @@ const PaymentDateSelector = ({
                 </SelectContent>
               </Select>
               <Calendar
-                month={month}
                 locale={ptBR}
                 mode="single"
                 selected={field.value}

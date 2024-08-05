@@ -46,7 +46,7 @@ const EditExpenseForm = ({ onClose }: EditExpenseFormProps) => {
     mode: "onSubmit",
     defaultValues: {
       name: expense.name,
-      value: expense.value.toString(),
+      value: parseFloat(expense.value.toString()),
       status: expense.status,
       category: expense.category,
       dueDate: new Date(expense.dueDate),

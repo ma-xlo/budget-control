@@ -49,6 +49,11 @@ const FormWrapper = forwardRef<HTMLFormElement, FormWrapperProps>(
               queryKey: keyGetMonthsExpensesTotal(),
             });
             toast.success("Despesa adicionada com sucesso");
+
+            addExpenseForm.reset();
+          },
+          onError: (error) => {
+            toast.error("Erro ao adicionar despesa");
           },
         }
       );
@@ -61,6 +66,7 @@ const FormWrapper = forwardRef<HTMLFormElement, FormWrapperProps>(
             ref={ref}
             onSubmit={addExpenseForm.handleSubmit(onSubmit)}
             {...props}
+            className="flex flex-col gap-4"
           >
             {children}
           </form>

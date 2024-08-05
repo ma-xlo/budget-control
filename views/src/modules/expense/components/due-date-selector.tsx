@@ -105,7 +105,6 @@ const DueDateSelector = ({
               </Select>
               <Calendar
                 locale={ptBR}
-                month={month}
                 mode="single"
                 selected={field.value}
                 onSelect={(value) => {

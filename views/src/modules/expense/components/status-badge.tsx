@@ -8,7 +8,7 @@ import { cn } from "../../core/lib/utils";
 type StatusBadgeVariant = "green" | "red" | "blue" | "yellow";
 
 const statusBadgeVariants = cva(
-  "rounded-full text-xs font-bold px-2 py-1 gap-1 flex items-center",
+  "rounded-full text-xs font-bold px-2 py-1 gap-1 flex items-center w-fit",
   {
     variants: {
       variant: {

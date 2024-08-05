@@ -32,7 +32,7 @@ const MonthsOverview = () => {
       value="months"
       className="grid grid-cols-1 grid-rows-2 lg:grid-cols-3 lg:grid-rows-1 gap-4"
     >
-      <div className="grid grid-cols-2 grid-rows-3 gap-2 xl:col-span-2 lg:col-span-1">
+      <div className="grid grid-cols-2 grid-rows-3 gap-2 xl:col-span-1 lg:col-span-2">
         {totalExpensesByUser?.map((responsible) => (
           <Card
             key={responsible.month}
@@ -57,7 +57,7 @@ const MonthsOverview = () => {
         ))}
       </div>
 
-      <MonthsOverviewChart className="col-span-1 xl:col-span-1 lg:col-span-2" />
+      <MonthsOverviewChart className="col-span-1 xl:col-span-2 lg:col-span-1" />
     </TabsContent>
   );
 };
