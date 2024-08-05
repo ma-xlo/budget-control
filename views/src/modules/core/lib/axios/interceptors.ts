@@ -14,7 +14,12 @@ const onResponseError = (error: AxiosError): Promise<AxiosError> => {
 };
 
 const onRequest = async (config: AxiosRequestConfig) => {
+  const token = localStorage.getItem("token");
   const { headers } = config;
+
+  if (token && headers) {
+    headers.Authorization = `Bearer ${JSON.parse(token)}`;
+  }
 
   return { ...config, headers: headers as AxiosRequestHeaders };
 };

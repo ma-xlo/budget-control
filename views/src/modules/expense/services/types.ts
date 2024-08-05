@@ -1,7 +1,8 @@
 export type Expense = {
+  id: number;
   name: string;
   value: number;
-  responsible: number;
+  userId: number;
   status: string;
   category: number;
   dueDate: string;
@@ -11,9 +12,19 @@ export type Expense = {
 export type AddExpensePayload = {
   name: string;
   value: number;
-  responsible: number;
-  status: string;
+  status?: string;
   category: number;
-  dueDate: string;
-  paymentDate: string;
+  dueDate?: Date | undefined;
+  paymentDate?: Date | undefined;
 };
+
+export type CategoryExpensesTotal = {
+  category: number;
+  total: number;
+};
+
+export type ResponsbileExpenses = {
+  
+}
+
+

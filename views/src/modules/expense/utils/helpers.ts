@@ -3,6 +3,8 @@ export const moneyMask = (value: string): string => {
 
   const numericValue = value.replace(/\D/g, "");
 
+  if (!numericValue) return "R$ 0,00";
+
   const numberValue = parseInt(numericValue, 10) / 100;
 
   const formattedValue = numberValue.toLocaleString("pt-BR", {

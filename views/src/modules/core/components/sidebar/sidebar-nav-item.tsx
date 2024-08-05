@@ -5,7 +5,7 @@ import NavSubItems from "@core/components/sidebar/sidebar-nav-sub-item";
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import Text from "@core/components/ui/text";
-import { SideBarLink } from "../../layouts/default";
+import { SideBarLink } from "../../layouts/dashboard";
 
 interface NavItemProps {
   size?: "icon" | "sm";

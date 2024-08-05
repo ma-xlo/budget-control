@@ -1,5 +1,6 @@
 import { ColumnDef, Table } from "@tanstack/react-table";
 import { createContext, ReactNode, useContext } from "react";
+import React from "react";
 
 interface DataTableContextProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

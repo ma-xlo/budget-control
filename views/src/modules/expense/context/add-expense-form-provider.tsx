@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { z } from "zod";
-import { AddExpenseFormSchema } from "../utils/add-expense-form-schema";
+import { ExpenseFormSchema } from "../utils/expense-form-schema";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { createContext, ReactNode } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-type AddExpenseFormValues = z.infer<typeof AddExpenseFormSchema>;
+type AddExpenseFormValues = z.infer<typeof ExpenseFormSchema>;
 
 interface AddExpenseFormContextProps {
   addExpenseForm: UseFormReturn<AddExpenseFormValues>;
@@ -24,7 +24,7 @@ interface AddExpenseFormProviderProps {
 const AddExpenseFormProvider = ({ children }: AddExpenseFormProviderProps) => {
   const [isAddingExpense, setIsAddingExpense] = useState(false);
   const addExpenseForm = useForm<AddExpenseFormValues>({
-    resolver: zodResolver(AddExpenseFormSchema),
+    resolver: zodResolver(ExpenseFormSchema),
     mode: "onChange",
   });
 

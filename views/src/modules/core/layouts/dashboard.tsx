@@ -6,7 +6,7 @@ import {
 } from "@core/components/ui/resizable";
 import { TooltipProvider } from "@core/components/ui/tooltip";
 // import { useGlobalStore } from "@core/stores/global";
-import { SideBar, SideBarContent, SideBarNav } from "@core/components/sidebar";
+
 import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { MobileSideBar } from "@core/components/sidebar/mobile";
@@ -16,8 +16,12 @@ import useMediaQuery from "@core/hooks/use-media-query";
 import useElementDimensions from "@/hooks/use-element-dimensions";
 import React from "react";
 import { cn } from "../lib/utils";
-import { LucideIcon, Receipt } from "lucide-react";
+import { LogOut, LucideIcon, Receipt, Sidebar } from "lucide-react";
 import path from "path";
+import { Button } from "../components/ui/button";
+import SidebarAction from "../components/sidebar/sidebar-action";
+import { SideBar, SideBarContent, SideBarNav } from "../components/sidebar";
+import LogoutSidebarButton from "../../auth/components/logout-button";
 
 export interface SideBarLink {
   title: string;
@@ -40,7 +44,7 @@ interface DefaultLayoutProps {
   sideBarCollapsedSize?: number;
 }
 
-export default function DefaultLayout({
+export default function DashboardLayout({
   defaultLayout = [15, 85],
   defaultCollapsed = false,
   sideBarCollapsedSize = 3,
@@ -55,7 +59,7 @@ export default function DefaultLayout({
       title: "Despesas",
       icon: Receipt,
       variant: "ghost",
-      path: "/expenses",
+      path: "/",
     },
   ];
 
@@ -110,12 +114,17 @@ export default function DefaultLayout({
                 )}
               >
                 <SideBar>
-                  <SideBarContent>
-                    <SideBarNav
-                      links={sideBarLinks}
-                      isCollapsed={isCollapsed}
-                    ></SideBarNav>
-                    <Separator />
+                  <SideBarContent className=" justify-between">
+                    <div>
+                      <SideBarNav
+                        links={sideBarLinks}
+                        isCollapsed={isCollapsed}
+                      ></SideBarNav>
+                      <Separator />
+                    </div>
+                    <SideBarNav isCollapsed={isCollapsed}>
+                      <LogoutSidebarButton />
+                    </SideBarNav>
                   </SideBarContent>
                 </SideBar>
               </ResizablePanel>

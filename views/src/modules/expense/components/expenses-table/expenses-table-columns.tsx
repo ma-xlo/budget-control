@@ -5,17 +5,14 @@ import { moneyMask } from "../../utils/helpers";
 import Text from "../../../core/components/ui/text";
 import React from "react";
 import { Checkbox } from "../../../core/components/ui/checkbox";
-import {
-  ResponsiveDropdownContent,
-  ResponsiveDropdownLabel,
-  ResponsiveDropdownMenu,
-  ResponsiveDropdownMenuHeader,
-  ResponsiveDropdownMenuItem,
-  ResponsiveDropdownMenuSeparator,
-  ResponsiveDropdownTrigger,
-} from "../../../core/components/ui/responsive-dropdown-menu";
-import { Button } from "../../../core/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import ExpenseOptionsDropdownMenu from "../expense-options-dropdown-menu";
+import ProtectedComponent from "../../../core/components/ui/protected-component";
+import { useQuery } from "@tanstack/react-query";
+import { User } from "../../../user/services/types";
+import { getMeOptions } from "../../../user/services";
+import { keyGetMe } from "../../../user/services/keys";
 
 export const ExpensesTableColumns: ColumnDef<Expense>[] = [
   {
@@ -65,7 +62,7 @@ export const ExpensesTableColumns: ColumnDef<Expense>[] = [
     },
   },
   {
-    accessorKey: "responsible",
+    accessorKey: "userId",
     header: ({ column }) => {
       return <ColumnSorting column={column}>Responsável</ColumnSorting>;
     },
@@ -87,36 +84,54 @@ export const ExpensesTableColumns: ColumnDef<Expense>[] = [
     header: ({ column }) => {
       return <ColumnSorting column={column}>Data de vencimento</ColumnSorting>;
     },
+    cell: ({ row }) => {
+      const { dueDate } = row.original;
+
+      if (!dueDate) {
+        return null;
+      }
+
+      return <span>{format(dueDate, "PPP", { locale: ptBR })}</span>;
+    },
   },
   {
     accessorKey: "paymentDate",
     header: ({ column }) => {
       return <ColumnSorting column={column}>Data de pagamento</ColumnSorting>;
     },
+
+    cell: ({ row }) => {
+      const { paymentDate } = row.original;
+
+      if (!paymentDate) {
+        return null;
+      }
+
+      return <span>{format(paymentDate, "PPP", { locale: ptBR })}</span>;
+    },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const { userId } = row.original;
+      const { data: me, status: statusMe } = useQuery<User>({
+        queryKey: keyGetMe(),
+        staleTime: Infinity,
+      });
+
+      if (statusMe === "error") {
+        return <div className="flex w-full justify-center" />;
+      }
+
+      if (statusMe === "pending") {
+        return <div className="flex w-full justify-center" />;
+      }
 
       return (
         <div className="flex w-full justify-center">
-          <ResponsiveDropdownMenu>
-            <ResponsiveDropdownTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Abrir menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </ResponsiveDropdownTrigger>
-
-            <ResponsiveDropdownContent align="end">
-              <ResponsiveDropdownMenuHeader>
-                <ResponsiveDropdownLabel>Ações</ResponsiveDropdownLabel>
-              </ResponsiveDropdownMenuHeader>
-              <ResponsiveDropdownMenuSeparator />
-              <ResponsiveDropdownMenuItem>Editar</ResponsiveDropdownMenuItem>
-            </ResponsiveDropdownContent>
-          </ResponsiveDropdownMenu>
+          <ProtectedComponent allowed={me.id === userId}>
+            <ExpenseOptionsDropdownMenu />
+          </ProtectedComponent>
         </div>
       );
     },

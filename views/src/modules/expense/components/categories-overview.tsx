@@ -10,8 +10,12 @@ import {
 import { Input } from "@core/components/ui/input";
 import { Label } from "@core/components/ui/label";
 import { TabsContent } from "@core/components/ui/tabs";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
 
 const CategoriesOverview = () => {
+  const {data: totalExpensesByCategory } = useQuery<>
+
   return (
     <TabsContent
       value="categories"

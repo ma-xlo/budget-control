@@ -24,10 +24,11 @@ import { ColumnResizer } from "../../../core/components/ui/data-table/column/col
 import { DataTablePagination } from "../../../core/components/ui/data-table/data-table-pagination";
 import React from "react";
 import { Checkbox } from "../../../core/components/ui/checkbox";
-import { useAddExpenseFormProvider } from "../add-expense-form-provider";
+import { useAddExpenseFormProvider } from "../../context/add-expense-form-provider";
 import { Plus } from "lucide-react";
 import FormWrapper from "../form-wrapper";
 import AddExpenseRow from "../add-expense-row";
+import { ExpenseProvider } from "../../context/expense-provider";
 
 const ExpensesTable = () => {
   const { isAddingExpense, setIsAddingExpense } = useAddExpenseFormProvider();
@@ -88,20 +89,23 @@ const ExpensesTable = () => {
             <DataTableBody className="rounded-xl">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <DataTableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                    className="hover:cursor-pointer"
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <DataTableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </DataTableCell>
-                    ))}
-                  </DataTableRow>
+                  <ExpenseProvider key={row.id} expense={row.original}>
+                    {
+                      <DataTableRow
+                        data-state={row.getIsSelected() && "selected"}
+                        className="hover:cursor-pointer"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <DataTableCell key={cell.id} className="p-4">
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </DataTableCell>
+                        ))}
+                      </DataTableRow>
+                    }
+                  </ExpenseProvider>
                 ))
               ) : (
                 <DataTableRow>
@@ -117,7 +121,7 @@ const ExpensesTable = () => {
               <DataTableRow onClick={() => setIsAddingExpense(true)}>
                 <DataTableCell
                   colSpan={ExpensesTableColumns.length}
-                  className="hover:cursor-pointer font-medium"
+                  className="hover:cursor-pointer font-medium p-4"
                 >
                   <div role="button" className="flex items-center gap-1">
                     Adicionar <Plus className="w-4 h-4 shrink-0" />

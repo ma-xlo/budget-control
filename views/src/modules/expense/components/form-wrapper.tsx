@@ -1,29 +1,42 @@
 import { forwardRef, HTMLAttributes } from "react";
-import { AddExpenseFormSchema } from "../utils/add-expense-form-schema";
-import { useAddExpenseFormProvider } from "./add-expense-form-provider";
+import { ExpenseFormSchema } from "../utils/expense-form-schema";
+import { useAddExpenseFormProvider } from "../context/add-expense-form-provider";
 import { Form } from "../../core/components/ui/form";
 import { z } from "zod";
 import React from "react";
 import { useAddExpense } from "../services";
 import { AddExpensePayload } from "../services/types";
+import { toast } from "sonner";
+import { queryClient } from "../../core/lib/react-query";
+import { keyListExpenses } from "../services/keys";
 
 interface FormWrapperProps extends HTMLAttributes<HTMLFormElement> {}
 
 const FormWrapper = forwardRef<HTMLFormElement, FormWrapperProps>(
   ({ children, ...props }, ref) => {
-    const { isAddingExpense, addExpenseForm } = useAddExpenseFormProvider();
+    const { isAddingExpense, addExpenseForm, setIsAddingExpense } =
+      useAddExpenseFormProvider();
     const { mutate: addExpense } = useAddExpense();
 
-    type FormSchemaType = z.infer<typeof AddExpenseFormSchema>;
+    type FormSchemaType = z.infer<typeof ExpenseFormSchema>;
 
     const onSubmit = (values: FormSchemaType) => {
-      const { name, value, } = values;
+      const addExpensePayload: AddExpensePayload = { ...values };
 
-      const addExpensePayload: AddExpensePayload = {};
-
-      addExpense({
-        ...addExpensePayload,
-      });
+      addExpense(
+        {
+          ...addExpensePayload,
+        },
+        {
+          onSuccess: () => {
+            setIsAddingExpense(false);
+            queryClient.invalidateQueries({
+              queryKey: keyListExpenses(),
+            });
+            toast.success("Despesa adicionada com sucesso");
+          },
+        }
+      );
     };
 
     if (isAddingExpense) {
