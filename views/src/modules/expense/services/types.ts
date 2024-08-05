@@ -9,6 +9,12 @@ export type Expense = {
   paymentDate: string;
 };
 
+export type ExpenseStatus = {
+  id: number;
+  name: string;
+  color: string;
+};
+
 export type AddExpensePayload = {
   name: string;
   value: number;

@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -18,7 +18,7 @@ module.exports = {
     },
     extend: {
       backgroundImage: {
-        'dark-pattern': 'url(src/assets/pattern-dark.svg)'
+        "dark-pattern": "url(src/assets/pattern-dark.svg)",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -77,4 +77,21 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+  safelist: [
+    {
+      pattern:
+        /bg-(red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
+      variants: ["dark", "hover", "focus", "dark:hover", "dark:focus"],
+    },
+    {
+      pattern:
+        /text-(red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
+      variants: ["dark", "hover", "focus", "dark:hover", "dark:focus"],
+    },
+    {
+      pattern:
+        /border-(red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
+      variants: ["dark", "hover", "focus", "dark:hover", "dark:focus"],
+    },
+  ],
+};

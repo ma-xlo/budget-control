@@ -14,6 +14,7 @@ import { cn } from "../../core/lib/utils";
 import ExpenseFormInput from "./expense-form-input";
 import PaymentDateSelector from "./payment-date-selector";
 import DueDateSelector from "./due-date-selector";
+import StatusSelectField from "./status-select-field";
 
 const AddExpenseRow = () => {
   const { setIsAddingExpense, addExpenseForm } = useAddExpenseFormProvider();
@@ -57,7 +58,19 @@ const AddExpenseRow = () => {
       <DataTableCell className="p-4">
         <Badge className="">Eu mesmo</Badge>
       </DataTableCell>
-      <DataTableCell className="p-4">Status</DataTableCell>
+      <DataTableCell className="p-4">
+        <StatusSelectField
+          form={addExpenseForm}
+          className={cn(
+            "border-none w-full justify-between",
+            !addExpenseForm.getValues("category") && "text-muted-foreground",
+            addExpenseForm.getValues("category") && "p-0 h-fit w-fit"
+          )}
+          badge={true}
+          chevrons={false}
+          isMessageAbsolute
+        />
+      </DataTableCell>
       <DataTableCell>
         <CategorySelectField
           form={addExpenseForm}

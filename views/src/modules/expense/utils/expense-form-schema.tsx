@@ -19,6 +19,9 @@ export const ExpenseFormSchema = z.object({
   category: z.number({
     required_error: "É necessário selecionar uma categoria",
   }),
+  status: z
+    .string({ required_error: "É necessário inserir o status" })
+    .min(1, "É necessário inserir o status"),
   dueDate: z.date().optional(),
   paymentDate: z.date().optional(),
 });

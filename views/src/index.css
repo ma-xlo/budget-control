@@ -146,4 +146,20 @@
   .muted {
     @apply text-sm text-muted-foreground;
   }
+
+  ::selection {
+    @apply bg-primary text-background;
+  }
+
+  ::-webkit-scrollbar {
+    @apply h-2 w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-muted-foreground;
+  }
 }
