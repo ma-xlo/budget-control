@@ -4,7 +4,12 @@ import { AddExpensePayload } from "./types";
 import { api } from "../../core/lib/axios";
 import { toast } from "sonner";
 import { queryClient } from "../../core/lib/react-query";
-import { keyListExpenses } from "./keys";
+import {
+  keyGetCategoriesExpensesTotal,
+  keyGetMonthsExpensesTotal,
+  keyGetUsersExpensesTotal,
+  keyListExpenses,
+} from "./keys";
 import { ExpenseFormValues } from "../utils/expense-form-schema";
 
 export const useAddExpense = () =>
@@ -24,6 +29,17 @@ export const useRemoveExpense = (expenseId: number) =>
       queryClient.invalidateQueries({
         queryKey: keyListExpenses(),
       });
+
+      queryClient.invalidateQueries({
+        queryKey: keyGetCategoriesExpensesTotal(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: keyGetUsersExpensesTotal(),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: keyGetMonthsExpensesTotal(),
+      });
     },
     onError: () => {
       toast.error("Ocorreu um erro remover a despesa");
@@ -39,6 +55,17 @@ export const useEditExpense = (expenseId: number) =>
       toast.success(`Despesa atualizada com sucesso`);
       queryClient.invalidateQueries({
         queryKey: keyListExpenses(),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: keyGetCategoriesExpensesTotal(),
+      });
+      queryClient.invalidateQueries({
+        queryKey: keyGetUsersExpensesTotal(),
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: keyGetMonthsExpensesTotal(),
       });
     },
     onError: () => {

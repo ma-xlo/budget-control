@@ -1,4 +1,4 @@
-import React from "react";
+import React, { HTMLAttributes } from "react";
 import {
   Card,
   CardContent,
@@ -10,9 +10,11 @@ import ExpensesTable from "../expenses-table";
 import OverviewTabs from "../overview-tabs";
 import AllExpensesHeader from "./all-expenses-header";
 
-const AllExpenses = () => {
+interface AllExpensesProps extends HTMLAttributes<HTMLDivElement> {}
+
+const AllExpenses = ({ ...props }: AllExpensesProps) => {
   return (
-    <Card className="">
+    <Card {...props}>
       <AllExpensesHeader />
       <CardContent>
         <ExpensesTable />

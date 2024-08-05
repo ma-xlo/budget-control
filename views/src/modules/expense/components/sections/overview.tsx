@@ -1,3 +1,4 @@
+import { HTMLAttributes } from "react";
 import {
   Card,
   CardContent,
@@ -6,12 +7,15 @@ import {
 } from "../../../core/components/ui/card";
 import Text from "../../../core/components/ui/text";
 import OverviewTabs from "../overview-tabs";
+import React from "react";
 
-const ExpensesOverview = () => {
+interface ExpensesOverviewProps extends HTMLAttributes<HTMLDivElement> {}
+
+const ExpensesOverview = ({ ...props }: ExpensesOverviewProps) => {
   return (
-    <Card>
+    <Card {...props}>
       <CardHeader>
-        <CardTitle tag="h2">Visão Geral</CardTitle>
+        <CardTitle>Visão Geral</CardTitle>
       </CardHeader>
       <CardContent>
         <OverviewTabs />

@@ -8,7 +8,12 @@ import { useAddExpense } from "../services";
 import { AddExpensePayload } from "../services/types";
 import { toast } from "sonner";
 import { queryClient } from "../../core/lib/react-query";
-import { keyListExpenses } from "../services/keys";
+import {
+  keyGetCategoriesExpensesTotal,
+  keyGetMonthsExpensesTotal,
+  keyGetUsersExpensesTotal,
+  keyListExpenses,
+} from "../services/keys";
 
 interface FormWrapperProps extends HTMLAttributes<HTMLFormElement> {}
 
@@ -32,6 +37,16 @@ const FormWrapper = forwardRef<HTMLFormElement, FormWrapperProps>(
             setIsAddingExpense(false);
             queryClient.invalidateQueries({
               queryKey: keyListExpenses(),
+            });
+            queryClient.invalidateQueries({
+              queryKey: keyGetCategoriesExpensesTotal(),
+            });
+            queryClient.invalidateQueries({
+              queryKey: keyGetUsersExpensesTotal(),
+            });
+
+            queryClient.invalidateQueries({
+              queryKey: keyGetMonthsExpensesTotal(),
             });
             toast.success("Despesa adicionada com sucesso");
           },

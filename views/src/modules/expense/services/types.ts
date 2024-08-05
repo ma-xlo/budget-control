@@ -25,7 +25,7 @@ export type CategoryExpensesTotal = {
 };
 
 export type UserExpensesTotal = {
-  user: number;
+  name: string;
   quantity: number;
   total: number;
 };

@@ -202,7 +202,48 @@ export async function getTotalByPaymentDate(req, res) {
       return acc;
     }, {});
 
+    // Adicionando todos os meses com valor zero se não existirem no resultado
+    const allMonths = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+    const allYears = [
+      ...new Set(expensesByMonthAndYear.map((expense) => expense.year)),
+    ];
+
+    allYears.forEach((year) => {
+      allMonths.forEach((month) => {
+        const key = `${month}-${year}`;
+        if (!summedData[key]) {
+          summedData[key] = {
+            month,
+            year,
+            quantity: 0,
+            total: 0,
+          };
+        }
+      });
+    });
+
     const result = Object.values(summedData);
+
+    // Ordenar o resultado por ano e mês
+    result.sort((a, b) => {
+      if (a.year !== b.year) {
+        return a.year - b.year;
+      }
+      return allMonths.indexOf(a.month) - allMonths.indexOf(b.month);
+    });
 
     return res.status(200).json(result);
   } catch (error) {
