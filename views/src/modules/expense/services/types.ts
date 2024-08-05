@@ -20,11 +20,19 @@ export type AddExpensePayload = {
 
 export type CategoryExpensesTotal = {
   category: number;
+  quantity: number;
   total: number;
 };
 
-export type ResponsbileExpenses = {
-  
-}
+export type UserExpensesTotal = {
+  user: number;
+  quantity: number;
+  total: number;
+};
 
-
+export type MonthExpensesTotal = {
+  month: number;
+  year: number;
+  quantity: number;
+  total: number;
+};

@@ -171,7 +171,6 @@ export async function getTotalByPaymentDate(req, res) {
   }
 
   try {
-    const payload = [];
     const expensesByPaymentDate = await Expense.findAll({
       where: {
         paymentDate: {
@@ -180,18 +179,23 @@ export async function getTotalByPaymentDate(req, res) {
       },
     });
 
-    const expensesByMonth = expensesByPaymentDate.map((expense) => {
-      const paymentMonth = getMonthName(expense.paymentDate);
-      return { month: paymentMonth, value: expense.value };
+    const expensesByMonthAndYear = expensesByPaymentDate.map((expense) => {
+      const paymentDate = new Date(expense.paymentDate);
+      const paymentMonth = getMonthName(paymentDate);
+      const paymentYear = paymentDate.getFullYear();
+      return { month: paymentMonth, year: paymentYear, value: expense.value };
     });
 
-    const summedData = expensesByMonth.reduce((acc, item) => {
-      if (acc[item.month]) {
-        acc[item.month].total += item.value;
+    const summedData = expensesByMonthAndYear.reduce((acc, item) => {
+      const key = `${item.month}-${item.year}`;
+      if (acc[key]) {
+        acc[key].total += item.value;
+        acc[key].quantity += 1;
       } else {
-        acc[item.month] = {
+        acc[key] = {
           month: item.month,
-          quantity: expensesByMonth.length,
+          year: item.year,
+          quantity: 1,
           total: item.value,
         };
       }
