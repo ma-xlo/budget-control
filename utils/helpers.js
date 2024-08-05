@@ -15,3 +15,10 @@ export function validateAuthorization(authorizationToken) {
   const decoded = jwt.verify(token, SECRET_KEY);
   return decoded
 }
+
+export function getMonthName(dateString) {
+  const date = new Date(dateString);
+  const options = { month: 'long' };
+  const month = date.toLocaleString('pt-BR', options);
+  return `${month[0].toUpperCase()}${month.substring(1)}`
+}
