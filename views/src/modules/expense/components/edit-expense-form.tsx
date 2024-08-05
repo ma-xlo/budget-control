@@ -29,6 +29,7 @@ import DueDateInput from "./due-date-selector";
 import PaymentDateSelector from "./payment-date-selector";
 import { useEditExpense } from "../services";
 import { Input } from "../../core/components/ui/input";
+import StatusSelectField from "./status-select-field";
 
 interface EditExpenseFormProps {
   onClose: () => void;
@@ -46,6 +47,7 @@ const EditExpenseForm = ({ onClose }: EditExpenseFormProps) => {
     defaultValues: {
       name: expense.name,
       value: expense.value.toString(),
+      status: expense.status,
       category: expense.category,
       dueDate: new Date(expense.dueDate),
       paymentDate: new Date(expense.paymentDate),
@@ -56,14 +58,13 @@ const EditExpenseForm = ({ onClose }: EditExpenseFormProps) => {
     const currentExpense: ExpenseFormValues = {
       name: expense.name,
       value: expense.value,
+      status: expense.status,
       category: expense.category,
       dueDate: new Date(expense.dueDate),
       paymentDate: new Date(expense.paymentDate),
     };
 
     if (values == currentExpense) {
-      console.log("Teste");
-
       return;
     }
 
@@ -117,6 +118,14 @@ const EditExpenseForm = ({ onClose }: EditExpenseFormProps) => {
                 <FormMessage className="text-xs" />
               </FormItem>
             )}
+          />
+
+          <StatusSelectField
+            className="w-full justify-between"
+            form={editExpenseForm}
+            label="Categoria"
+            disabled={isEditingExpense}
+            badge
           />
 
           <CategorySelectField

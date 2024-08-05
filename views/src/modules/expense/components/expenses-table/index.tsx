@@ -32,11 +32,18 @@ import AddExpenseRow from "../add-expense-row";
 import { ExpenseProvider } from "../../context/expense-provider";
 import ExpensesSearchBar from "../expenses-search-bar";
 import { Separator } from "../../../core/components/ui/separator";
+import { User } from "../../../user/services/types";
+import { keyGetMe } from "../../../user/services/keys";
 
 const ExpensesTable = () => {
   const { isAddingExpense, setIsAddingExpense } = useAddExpenseFormProvider();
   const { data: expenses, status: statusListExpenses } = useQuery<Expense[]>({
     queryKey: keyListExpenses(),
+  });
+
+  const { data: me } = useQuery<User>({
+    queryKey: keyGetMe(),
+    staleTime: Infinity,
   });
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -55,6 +62,7 @@ const ExpensesTable = () => {
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    enableRowSelection: (row) => row.original.userId === me?.id,
   });
 
   if (statusListExpenses === "error") {

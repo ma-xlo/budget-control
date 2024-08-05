@@ -79,7 +79,10 @@ const PaymentDateSelector = ({
                 onValueChange={(value) => {
                   const date = addDays(new Date(), parseInt(value));
                   setMonth(date);
-                  field.onChange(date);
+
+                  form.setValue("status", "Paga");
+
+                  field.onChange(value);
                 }}
               >
                 <SelectTrigger>
@@ -100,7 +103,11 @@ const PaymentDateSelector = ({
                 locale={ptBR}
                 mode="single"
                 selected={field.value}
-                onSelect={field.onChange}
+                onSelect={(value) => {
+                  form.setValue("status", "Paga");
+
+                  field.onChange(value);
+                }}
                 disabled={(date) => date < new Date("1900-01-01")}
                 initialFocus
               />

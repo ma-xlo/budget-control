@@ -71,7 +71,7 @@ const CategorySelectField = ({
                 >
                   {field.value && categories ? (
                     badge ? (
-                      <Badge>
+                      <Badge variant="outline">
                         {
                           categories.find(
                             (category) => category.id === field.value

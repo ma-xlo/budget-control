@@ -15,15 +15,37 @@ import ExpenseFormInput from "./expense-form-input";
 import PaymentDateSelector from "./payment-date-selector";
 import DueDateSelector from "./due-date-selector";
 import StatusSelectField from "./status-select-field";
+import { User } from "../../user/services/types";
+import { useQuery } from "@tanstack/react-query";
+import { keyGetMe } from "../../user/services/keys";
+import Text from "../../core/components/ui/text";
 
 const AddExpenseRow = () => {
   const { setIsAddingExpense, addExpenseForm } = useAddExpenseFormProvider();
   const valueInput = useRef<HTMLInputElement>(null);
 
+  const { data: me, status: statusMe } = useQuery<User>({
+    queryKey: keyGetMe(),
+    staleTime: Infinity,
+  });
+
   return (
     <DataTableRow className="p-4">
       <DataTableCell className="p-4">
         <Checkbox disabled />
+      </DataTableCell>
+      <DataTableCell>
+        <StatusSelectField
+          form={addExpenseForm}
+          className={cn(
+            "border-none w-full justify-between",
+            !addExpenseForm.getValues("category") && "text-muted-foreground",
+            addExpenseForm.getValues("category") && "p-0 h-fit w-fit"
+          )}
+          badge={true}
+          chevrons={false}
+          isMessageAbsolute
+        />
       </DataTableCell>
       <DataTableCell className="p-4">
         <ExpenseFormInput
@@ -56,21 +78,11 @@ const AddExpenseRow = () => {
         />
       </DataTableCell>
       <DataTableCell className="p-4">
-        <Badge className="">Eu mesmo</Badge>
+        <Badge className="">
+          <Text>{`${me?.firstName} ${me?.lastName}`}</Text>
+        </Badge>
       </DataTableCell>
-      <DataTableCell className="p-4">
-        <StatusSelectField
-          form={addExpenseForm}
-          className={cn(
-            "border-none w-full justify-between",
-            !addExpenseForm.getValues("category") && "text-muted-foreground",
-            addExpenseForm.getValues("category") && "p-0 h-fit w-fit"
-          )}
-          badge={true}
-          chevrons={false}
-          isMessageAbsolute
-        />
-      </DataTableCell>
+
       <DataTableCell>
         <CategorySelectField
           form={addExpenseForm}

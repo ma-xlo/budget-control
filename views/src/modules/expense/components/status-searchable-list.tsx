@@ -12,6 +12,7 @@ import { Command as CommandPrimitive } from "cmdk";
 import { cn } from "../../core/lib/utils";
 import { Badge } from "../../core/components/ui/badge";
 import { status } from "../utils/expense-status";
+import { StatusBadge, StatusBadgeVariant } from "./status-badge";
 
 interface FilterSearchableListProps
   extends ComponentPropsWithoutRef<typeof CommandPrimitive.Item> {}
@@ -33,7 +34,10 @@ const StatusSearchableList = ({
               value={status.id}
               {...props}
             >
-              <Badge>{status.name}</Badge>
+              <StatusBadge
+                status={status}
+                variant={status.color as StatusBadgeVariant}
+              ></StatusBadge>
             </SearchableListItem>
           ))}
         </SearchableListGroup>

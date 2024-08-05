@@ -45,7 +45,7 @@ const CategoriesOverview = () => {
             <CardFooter className="justify-between w-full flex items-center p-4 md:p-4">
               <Tooltip>
                 <TooltipTrigger>
-                  <Badge>{moneyMask(category.total.toString())}</Badge>
+                  <Badge variant="outline">{moneyMask(category.total.toString())}</Badge>
                 </TooltipTrigger>
                 <TooltipContent>Total</TooltipContent>
               </Tooltip>

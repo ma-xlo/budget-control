@@ -11,16 +11,19 @@ import {
   FormLabel,
   FormMessage,
 } from "../../core/components/ui/form";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../../core/components/ui/button";
 import { ChevronsUpDown } from "lucide-react";
 import StatusSearchableList from "./status-searchable-list";
-import { Badge } from "../../core/components/ui/badge";
 import { UseFormReturn } from "react-hook-form";
 import { ExpenseFormValues } from "../utils/expense-form-schema";
 import Text from "../../core/components/ui/text";
 import { status } from "../utils/expense-status";
-import { BadgeVariant, StatusBadge, statusBadgeVariants } from "./status-badge";
+import {
+  StatusBadgeVariant,
+  StatusBadge,
+  statusBadgeVariants,
+} from "./status-badge";
 import { ExpenseStatus } from "../services/types";
 
 interface StatusSelectFieldProps {
@@ -52,6 +55,26 @@ const StatusSelectField = ({
     ExpenseStatus | undefined
   >(formStatus);
 
+  useEffect(() => {
+    const { dueDate, paymentDate } = form.getValues();
+
+    if (dueDate && !paymentDate) {
+      if (dueDate < new Date()) {
+        form.setValue("status", "Atrasada");
+      } else {
+        form.setValue("status", "Agendada");
+      }
+    }
+
+    if (formStatus) {
+      setSelectedStatus(formStatus);
+    }
+  }, [
+    form.getValues("status"),
+    form.getValues("dueDate"),
+    form.getValues("paymentDate"),
+  ]);
+
   return (
     <FormField
       control={form.control}
@@ -75,13 +98,8 @@ const StatusSelectField = ({
                     badge ? (
                       <StatusBadge
                         status={selectedStatus}
-                        variant={selectedStatus?.color as BadgeVariant}
-                      >
-                        {
-                          status.find((status) => status.name === field.value)
-                            ?.name
-                        }
-                      </StatusBadge>
+                        variant={selectedStatus?.color as StatusBadgeVariant}
+                      ></StatusBadge>
                     ) : (
                       status.find((status) => status.name === field.value)?.name
                     )

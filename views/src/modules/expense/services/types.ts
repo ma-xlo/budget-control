@@ -3,8 +3,10 @@ export type Expense = {
   name: string;
   value: number;
   userId: number;
+  userName: string;
   status: string;
   category: number;
+  categoryName: string;
   dueDate: string;
   paymentDate: string;
 };
@@ -18,7 +20,7 @@ export type ExpenseStatus = {
 export type AddExpensePayload = {
   name: string;
   value: number;
-  status?: string;
+  status: string;
   category: number;
   dueDate?: Date | undefined;
   paymentDate?: Date | undefined;

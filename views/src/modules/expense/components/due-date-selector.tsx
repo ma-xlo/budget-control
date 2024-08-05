@@ -79,6 +79,14 @@ const DueDateSelector = ({
                 onValueChange={(value) => {
                   const date = addDays(new Date(), parseInt(value));
                   field.onChange(date);
+
+                  if (
+                    !form.getValues("status") &&
+                    !form.getValues("paymentDate")
+                  ) {
+                    form.setValue("status", "Agendada");
+                  }
+
                   setMonth(date);
                 }}
               >
@@ -100,7 +108,13 @@ const DueDateSelector = ({
                 month={month}
                 mode="single"
                 selected={field.value}
-                onSelect={field.onChange}
+                onSelect={(value) => {
+                  if (!form.getValues("paymentDate")) {
+                    form.setValue("status", "Agendada");
+                  }
+
+                  field.onChange(value);
+                }}
                 disabled={(date) => date < new Date("1900-01-01")}
                 initialFocus
               />

@@ -13,6 +13,9 @@ import { useQuery } from "@tanstack/react-query";
 import { User } from "../../../user/services/types";
 import { getMeOptions } from "../../../user/services";
 import { keyGetMe } from "../../../user/services/keys";
+import { status } from "../../utils/expense-status";
+import { StatusBadge, StatusBadgeVariant } from "../status-badge";
+import { Badge } from "../../../core/components/ui/badge";
 
 export const ExpensesTableColumns: ColumnDef<Expense>[] = [
   {
@@ -29,15 +32,57 @@ export const ExpensesTableColumns: ColumnDef<Expense>[] = [
         />
       </div>
     ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Selecionar despesa"
-      />
-    ),
+    cell: ({ row }) => {
+      const { userId } = row.original;
+      const { data: me, status: statusMe } = useQuery<User>({
+        queryKey: keyGetMe(),
+        staleTime: Infinity,
+      });
+
+      if (statusMe === "error") {
+        return <div className="flex w-full justify-center" />;
+      }
+
+      if (statusMe === "pending") {
+        return <div className="flex w-full justify-center" />;
+      }
+
+      return (
+        <ProtectedComponent allowed={me.id === userId}>
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Selecionar despesa"
+          />
+        </ProtectedComponent>
+      );
+    },
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return <ColumnSorting column={column}>Status</ColumnSorting>;
+    },
+    cell: ({ row }) => {
+      const { status: originalStatus } = row.original;
+
+      const currStatus = status.find(
+        (status) => status.name === originalStatus
+      );
+
+      if (!currStatus) {
+        return null;
+      }
+
+      return (
+        <StatusBadge
+          status={currStatus}
+          variant={currStatus.color as StatusBadgeVariant}
+        />
+      );
+    },
   },
   {
     accessorKey: "name",
@@ -58,25 +103,37 @@ export const ExpensesTableColumns: ColumnDef<Expense>[] = [
     cell: ({ row }) => {
       const { value } = row.original;
 
-      return <span>{moneyMask(value.toString())}</span>;
+      return <Text>{moneyMask(value.toString())}</Text>;
     },
   },
   {
-    accessorKey: "userId",
-    header: ({ column }) => {
-      return <ColumnSorting column={column}>Responsável</ColumnSorting>;
-    },
-  },
-  {
-    accessorKey: "status",
-    header: ({ column }) => {
-      return <ColumnSorting column={column}>Status</ColumnSorting>;
-    },
-  },
-  {
-    accessorKey: "category",
+    accessorKey: "categoryName",
     header: ({ column }) => {
       return <ColumnSorting column={column}>Categoria</ColumnSorting>;
+    },
+    cell: ({ row }) => {
+      const { userName } = row.original;
+
+      return (
+        <Badge variant="outline">
+          <Text>{userName}</Text>
+        </Badge>
+      );
+    },
+  },
+  {
+    accessorKey: "categoryName",
+    header: ({ column }) => {
+      return <ColumnSorting column={column}>Categoria</ColumnSorting>;
+    },
+    cell: ({ row }) => {
+      const { categoryName } = row.original;
+
+      return (
+        <Badge variant="outline">
+          <Text>{categoryName}</Text>
+        </Badge>
+      );
     },
   },
   {
