@@ -21,20 +21,33 @@ export async function createExpense(req, res) {
   }
 }
 
-export async function getAllExpenses(req, res) {
-  const user = validateAuthorization(req.headers.authorization);
-  console.log(user);
-  if (!user) {
-    return res.status(401).json({ message: "Unauthorized" });
+export async function getAllExpenses (req, res) {
+  const user = validateAuthorization(req.headers.authorization)
+  if(!user) {
+    return res.status(401).json({message: "Unauthorized"})
   }
 
   try {
     const expenses = await Expense.findAll();
-    return res.status(200).json(expenses);
+    const categories = await Category.findAll();
+    const categoryMap = {};
+
+    categories.forEach(category => {
+      categoryMap[category.id] = category.name;
+    });
+
+    const payload = expenses.map(expense => {
+      return {
+        ...expense.get(),
+        categoryName: `${categoryMap[expense.category][0].toUpperCase()}${categoryMap[expense.category].substring(1)}` || null,
+      };
+    });
+    return res.status(200).json(payload);
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
-}
+};
+
 
 export async function deleteExpense(req, res) {
   const user = validateAuthorization(req.headers.authorization);
