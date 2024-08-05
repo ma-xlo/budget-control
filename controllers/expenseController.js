@@ -30,16 +30,24 @@ export async function getAllExpenses (req, res) {
   try {
     const expenses = await Expense.findAll();
     const categories = await Category.findAll();
+    const users = await User.findAll();
     const categoryMap = {};
+    const userMap = {};
 
     categories.forEach(category => {
       categoryMap[category.id] = category.name;
+    });
+
+    users.forEach(user => {
+      userMap[user.id] = `${user.firstName} ${user.lastName}`;
+      // userMap[user.id] = `${user.firstName[0].toUpperCase()}${user.firstName.substring(1)} ${user.lastName}`;
     });
 
     const payload = expenses.map(expense => {
       return {
         ...expense.get(),
         categoryName: `${categoryMap[expense.category][0].toUpperCase()}${categoryMap[expense.category].substring(1)}` || null,
+        userName: userMap[expense.userId]
       };
     });
     return res.status(200).json(payload);
