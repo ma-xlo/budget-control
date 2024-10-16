@@ -57,6 +57,7 @@ const DueDateSelector = ({
             <ResponsivePopoverTrigger asChild>
               <FormControl>
                 <Button
+                  id="due-date-select-trigger"
                   variant={"outline"}
                   className={cn(
                     "w-[240px] pl-3 text-left font-normal",

@@ -104,7 +104,7 @@ const AddExpenseRow = () => {
       </DataTableCell>
       <DataTableCell className="p-4">
         <div className="flex items-center gap-1 w-full justify-center">
-          <Button size="icon" type="submit">
+          <Button size="icon" type="submit" id="submit-add-expense">
             <Check className="w-4 h-4 shrink-0" />
           </Button>
           <Button

@@ -5,7 +5,12 @@ class RegisterForm {
     valueInput: () => cy.get('input[name="value"]'),
 
     statusSelectTrigger: () => cy.get('#status-select-trigger'),
-    categorySelectField: () => cy.get('#category-select-trigger')
+
+
+    categorySelectTrigger: () => cy.get('#category-select-trigger'),
+    dueDataSelectTrigger: () => cy.get('#due-date-select-trigger'),
+
+    submitButton: () => cy.get('#submit-add-expense')
   }
 
   typeName(text: string) {
@@ -24,7 +29,7 @@ class RegisterForm {
   }
 
   selectCategory(category: string) {
-    this.elements.categorySelectField().click()
+    this.elements.categorySelectTrigger().click()
     cy.get(`div[data-value="${category}"]`).click()
   }
 }
@@ -46,9 +51,7 @@ describe('Cadastro de despesa', () => {
     const input = {
       status: "Aberta",
       name: "Jantar com amigos",
-      category: "Alimentação",
       value: "",
-      date: "",
     }
 
   
@@ -64,19 +67,20 @@ describe('Cadastro de despesa', () => {
       registerForm.typeValue(input.value)
     })
     
-    it(`Quando eu preencher o campo "Categoria" com "${input.category}"`, () => {
-      registerForm.selectCategory(input.category)
+    it(`E não selecionar nenhuma categoria`, () => {
+      registerForm.elements.categorySelectTrigger().click()
+    })
+    
+    it('Então clico no botão "Salvar"', () => {
+      registerForm.elements.submitButton().click()
     })
 
-    it('E preencher o campo "Data" com ""')
-    
+    it('Então devo ver a mensagem "É necessário preencher o valor" abaixo do campo de valor', () => {
+      registerForm.elements.valueInput().parent().find('div').find('span').find('p').should('have.text', 'É necessário preencher o valor')
+    })
 
-    it('Então clico no botão "Salvar"')
-
-    it('Então devo ver a mensagem "Por favor, insira um valor válido" acima do campo de valor')
-
-    it('E devo ver a mensagem "Por favor, insira uma data válida" acima do campo de data')
-
-    it('E os campos de valor e data devem exibir um ícone de aviso')
+    it('E devo ver a mensagem "É necessário selecionar uma categoria" abaixo do campo de categoria', () => {
+      registerForm.elements.categorySelectTrigger().parent().find('div').find('span').find('p').should('have.text', 'É necessário selecionar uma categoria')
+    })
   })
 })
