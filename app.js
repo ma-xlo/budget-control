@@ -19,7 +19,7 @@ app.use("/api", expenseRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", authRoutes);
 
-app.listen(3001, () => {
-  console.log("Server is running on port 3001");
-  console.log("Link: http://localhost:3001/");
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+  console.log("Link: http://localhost:3000/");
 });

@@ -92,6 +92,7 @@ const StatusSelectField = ({
                     className
                   )}
                   role="combobox"
+                  id="status-select-trigger"
                   disabled={disabled}
                 >
                   {field.value && status && selectedStatus ? (

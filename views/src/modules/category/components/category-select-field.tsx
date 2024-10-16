@@ -66,6 +66,7 @@ const CategorySelectField = ({
                     !field.value && "text-muted-foreground",
                     className
                   )}
+                  id="category-select-trigger"
                   role="combobox"
                   disabled={disabled}
                 >

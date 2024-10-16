@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cypress:web": "npx cypress open --config-file ./cypress.config.mts",
+    "cypress:headless": "npx cypress run --browser electron --config-file ./cypress.config.mts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -49,6 +51,8 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.51.15",
+    "@types/jest": "^29.5.13",
+    "@types/mocha": "^10.0.9",
     "@types/node": "^22.0.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -56,6 +60,7 @@
     "@typescript-eslint/parser": "^7.15.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
+    "cypress": "^13.15.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2",
