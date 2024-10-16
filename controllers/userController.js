@@ -94,7 +94,7 @@ export async function updateUser(req, res) {
 export async function deleteUser(req, res) {
   try {
     const userId = req.params.id;
-    const user = await user.findByPk(userId);
+    const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: "Not found" });
     }
